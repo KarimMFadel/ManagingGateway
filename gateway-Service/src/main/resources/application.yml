@@ -1,0 +1,19 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /gateway/
+
+spring:
+  application:
+    name: gateway-Service
+  datasource:
+    url: jdbc:h2:mem:gatewayDB
+    driver-class-name: org.h2.Driver
+    username: admin
+    password: P@$$w0rd
+    schema: classpath:/script/schema.sql
+    data: classpath:/script/data.sql
+    initialization-mode: always
+    
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
