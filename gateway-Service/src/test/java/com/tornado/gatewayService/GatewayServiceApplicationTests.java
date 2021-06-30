@@ -1,7 +1,10 @@
 package com.tornado.gatewayService;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -45,7 +48,7 @@ class GatewayServiceApplicationTests {
 	@Test
 	void addGatewayWithValidInput() {
 		gatewayService.save(defineGateways().get(0));
-		assertNotNull(gatewayService.findById(1L).get());
+		assertNotNull(gatewayService.findById(1L));
 	}
 
 	
@@ -81,17 +84,29 @@ class GatewayServiceApplicationTests {
 	
 	@Test
 	void addDevice() {
-		gatewayService.save(defineDevices().get(0).getGateway());
-		deviceService.save(defineDevices().get(0));
-		assertNotNull(gatewayService.findById(1L).get());
+		Gateway gateway = defineDevices().get(0).getGateway();
+		gatewayService.save(gateway);
+		deviceService.save(defineDevices().get(0), gateway.getId());
+		assertNotNull(gatewayService.findById(1L));
 	}
 	
 
 	@Test
 	void removeDevice() {
-		when(deviceRepository.findByDeviceyId(1L)).thenReturn(defineDevices().get(0));
-		assertThat(deviceService.findByGatewayId(1L)).;
-		assertNotNull(gatewayService.remove(1L)).isEqualTo(true);
+		when(deviceService.findById(1L)).thenReturn(defineDevices().get(0));
+		
+		deviceService.remove(1L);
+		
+		Exception exception = assertThrows(GatewayException.class, () -> {
+			deviceService.findById(1L);
+		});
+
+		String expectedMessage = "invalid deviceId parameter";
+		String actualMessage = exception.getMessage();
+
+		assertTrue(actualMessage.contains(expectedMessage));
+		
+		verify(deviceRepository).deleteById(1L);
 	}
 
 	
