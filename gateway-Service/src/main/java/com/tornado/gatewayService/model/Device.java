@@ -15,6 +15,13 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "DEVICES")
 public class Device {
@@ -25,7 +32,7 @@ public class Device {
 	private Long id;
 
 	@Column(name = "UNIQUE_NUMBER")
-	private Long uniqueNumber;
+	private String uniqueNumber;
 
 	@Column(name = "VENDOR")
 	private String vendor;
@@ -41,53 +48,5 @@ public class Device {
 	@ManyToOne
 	@JoinColumn(name = "GATEWAYS_ID")
 	private Gateway gateway;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Long getUniqueNumber() {
-		return uniqueNumber;
-	}
-
-	public void setUniqueNumber(Long uniqueNumber) {
-		this.uniqueNumber = uniqueNumber;
-	}
-
-	public String getVendor() {
-		return vendor;
-	}
-
-	public void setVendor(String vendor) {
-		this.vendor = vendor;
-	}
-
-	public Date getCreatedOn() {
-		return createdOn;
-	}
-
-	public void setCreatedOn(Date createdOn) {
-		this.createdOn = createdOn;
-	}
-
-	public DeviceStatus getStatus() {
-		return status;
-	}
-
-	public void setStatus(DeviceStatus status) {
-		this.status = status;
-	}
-
-	public Gateway getGateway() {
-		return gateway;
-	}
-
-	public void setGateway(Gateway gateway) {
-		this.gateway = gateway;
-	}
-
+	
 }
