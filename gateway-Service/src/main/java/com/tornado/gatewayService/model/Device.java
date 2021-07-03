@@ -29,7 +29,7 @@ public class Device {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID")
+	@Column(name = "DEVICE_ID")
 	private Long id;
 
 	@Column(name = "UNIQUE_NUMBER")
@@ -47,7 +47,7 @@ public class Device {
 	private DeviceStatus status;
 
 	@ManyToOne
-	@JoinColumn(name = "GATEWAYS_ID")
+	@JoinColumn(name = "GATEWAY_ID")
 	private Gateway gateway;
 	
 	

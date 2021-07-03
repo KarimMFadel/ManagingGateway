@@ -1,8 +1,12 @@
 server:
   port: 8080
   servlet:
-    context-path: /gateway/
+    context-path: /gateway/rest/
 
+logging:
+  level: 
+    root: info
+    
 spring:
   application:
     name: gateway-Service
@@ -12,8 +16,19 @@ spring:
     username: admin
     password: P@$$w0rd
     schema: classpath:/script/schema.sql
-    data: classpath:/script/data.sql
-    initialization-mode: always
-    
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
+    database: h2
+    hibernate:
+      ddl-auto: none
+  sql:
+    init:
+      mode: always
+      username: admin
+      password: P@$$w0rd
+
+# Enabling H2 Console
+#  h2:
+#    console:
+#      enabled: true
+#      path: /h2

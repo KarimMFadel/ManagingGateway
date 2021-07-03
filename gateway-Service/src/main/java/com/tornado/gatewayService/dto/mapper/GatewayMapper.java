@@ -5,9 +5,7 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 
-import com.tornado.gatewayService.dto.DeviceDto;
 import com.tornado.gatewayService.dto.GatewayDTO;
-import com.tornado.gatewayService.model.Device;
 import com.tornado.gatewayService.model.Gateway;
 
 public class GatewayMapper {

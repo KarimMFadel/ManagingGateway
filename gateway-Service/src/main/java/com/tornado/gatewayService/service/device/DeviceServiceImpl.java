@@ -3,6 +3,9 @@ package com.tornado.gatewayService.service.device;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +24,7 @@ public class DeviceServiceImpl implements DeviceService {
 	GatewayService GatewayService;
 
 	
+	@Transactional
 	@Override
 	public Device save(Device device, Long gatewayId) {
 		validateDevice(device, gatewayId);
@@ -28,6 +32,7 @@ public class DeviceServiceImpl implements DeviceService {
 		return deviceRepository.save(device);
 	}
 
+	
 	
 	@Override
 	public List<Device> findAll() {
@@ -39,10 +44,13 @@ public class DeviceServiceImpl implements DeviceService {
 	public Device findById(Long id) {
 		if(Objects.isNull(id) || Objects.equals(id, 0L))
 			throw new GatewayException("invalid deviceId parameter");
+		if( !deviceRepository.existsById(id))
+			throw new GatewayException("There is no device with id : " + id);
 		return deviceRepository.getById(id);
 	}
 	
 	
+	@Transactional
 	@Override
 	public void remove(Long id) {
 		this.findById(id);
@@ -61,7 +69,7 @@ public class DeviceServiceImpl implements DeviceService {
 		if (deviceRepository.checkUniquenessOfUniqueNumber(device.getUniqueNumber()))
 			throw new GatewayException("UniqueNumber must be unique, there is a device with the same unique number");
 		if (deviceRepository.getNumberOfDevicesPerEachGateway(gatewayId) > 10)
-			throw new GatewayException("Couldn't add more than 10 device with the same a gateway : " + gatewayId);
+			throw new GatewayException("Couldn't add more than 10 device with the same gateway : " + gatewayId);
 	}
 	
 }

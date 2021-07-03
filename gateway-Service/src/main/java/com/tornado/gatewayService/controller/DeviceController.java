@@ -24,7 +24,7 @@ public class DeviceController {
 	DeviceService deviceService;
 	
 	@PostMapping(produces = "application/json")
-    public Device getDevice(@RequestBody DeviceDto deviceDto) {
+    public Device addDevice(@RequestBody DeviceDto deviceDto) {
         return deviceService.save(DeviceMapper.convertFromDto(deviceDto), deviceDto.getGatewayId());
     }
 	
@@ -35,7 +35,7 @@ public class DeviceController {
     }
 	
 	
-	@GetMapping(path = "/{gatewayId}", produces = "application/json")
+	@GetMapping(path = "/gateway/{gatewayId}", produces = "application/json")
     public List<DeviceDto> getDeviceByGatewayId(@PathVariable Long gatewayId) {
         return DeviceMapper.convertToDto(deviceService.findByGatewayId(gatewayId));
     }

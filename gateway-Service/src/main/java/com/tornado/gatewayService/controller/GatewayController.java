@@ -20,7 +20,7 @@ import com.tornado.gatewayService.service.gateway.GatewayService;
 
 
 @RestController
-@RequestMapping("device")
+@RequestMapping("gateway")
 public class GatewayController {
 
 	@Autowired
@@ -30,7 +30,7 @@ public class GatewayController {
 	DeviceService deviceService;
 	
 	@PostMapping(produces = "application/json")
-    public Gateway getGateway(@RequestBody GatewayDTO deviceDto) {
+    public Gateway addGateway(@RequestBody GatewayDTO deviceDto) {
         return gatewayService.save(GatewayMapper.convertFromDto(deviceDto));
     }
 	
@@ -55,7 +55,7 @@ public class GatewayController {
 			gatewayDTO.setDeviceDtos(DeviceMapper.convertToDto(deviceService.findByGatewayId(gateway.getId()) ) );
 			gatewayDTOs.add(gatewayDTO);
 		});
-        return GatewayMapper.convertToDto( gatewayService.findAll() );
+        return gatewayDTOs;
     }
 	
 }

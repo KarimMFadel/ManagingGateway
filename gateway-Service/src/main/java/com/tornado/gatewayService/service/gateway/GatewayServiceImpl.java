@@ -3,6 +3,8 @@ package com.tornado.gatewayService.service.gateway;
 import java.util.List;
 import java.util.Objects;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,7 @@ public class GatewayServiceImpl implements GatewayService {
 	@Autowired
 	GatewayRepository gatewayRepository;
 
+	@Transactional
 	@Override
 	public Gateway save(Gateway gateway) {
 		validate(gateway);
@@ -34,6 +37,8 @@ public class GatewayServiceImpl implements GatewayService {
 	public Gateway findById(Long id) {
 		if(Objects.isNull(id) || Objects.equals(id, 0L))
 			throw new GatewayException("invalid GatewayId parameter");
+		if( !gatewayRepository.existsById(id) )
+			throw new GatewayException("There is no gateway with id : " + id);
 		return gatewayRepository.getById(id);
 	}
 
@@ -42,7 +47,7 @@ public class GatewayServiceImpl implements GatewayService {
 		if (!IPv4ValidatorRegex.isValid(gateway.getIpAddress()))
 			throw new GatewayException("invalid IP4-address parameter");
 		if (gatewayRepository.checkUniquenessOfSerialNumber(gateway.getUniqueSerialNumber()))
-			throw new GatewayException("SerialNumber must be unique, there is a gateway with the same ServialNumber");
+			throw new GatewayException("SerialNumber must be unique, there is a gateway with the same SerialNumber");
 	 }
 
 }

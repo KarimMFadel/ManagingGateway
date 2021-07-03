@@ -11,7 +11,7 @@ import com.tornado.gatewayService.model.Device;
 @Repository
 public interface DeviceRepository extends JpaRepository<Device, Long> {
 
-	@Query("SELECT * FROM Device a WHERE a.gateway.id = ?1 ")
+	@Query("SELECT a FROM Device a WHERE a.gateway.id = ?1 ")
 	List<Device> findByGatewayId(Long uniqueSerialNumber);
 	
 	
