@@ -23,6 +23,7 @@ public class DeviceServiceImpl implements DeviceService {
 	
 	@Override
 	public Device save(Device device, Long gatewayId) {
+		validateDevice(device, gatewayId);
 		device.setGateway(GatewayService.findById(gatewayId));
 		return deviceRepository.save(device);
 	}
@@ -53,6 +54,14 @@ public class DeviceServiceImpl implements DeviceService {
 	public List<Device> findByGatewayId(Long GatewayId) {
 		GatewayService.findById(GatewayId);
 		return deviceRepository.findByGatewayId(GatewayId);
+	}
+	
+	
+	private void validateDevice(Device device, Long gatewayId) {
+		if (deviceRepository.checkUniquenessOfUniqueNumber(device.getUniqueNumber()))
+			throw new GatewayException("UniqueNumber must be unique, there is a device with the same unique number");
+		if (deviceRepository.getNumberOfDevicesPerEachGateway(gatewayId) > 10)
+			throw new GatewayException("Couldn't add more than 10 device with the same a gateway : " + gatewayId);
 	}
 	
 }

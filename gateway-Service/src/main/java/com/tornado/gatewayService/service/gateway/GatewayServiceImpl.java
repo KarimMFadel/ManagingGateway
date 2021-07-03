@@ -19,12 +19,7 @@ public class GatewayServiceImpl implements GatewayService {
 
 	@Override
 	public Gateway save(Gateway gateway) {
-		
-		if( ! IPv4ValidatorRegex.isValid(gateway.getIpAddress()) )
-			throw new GatewayException("invalid IP4-address parameter");
-		if( gatewayRepository.checkUniquenessOfSerialNumber(gateway.getUniqueSerialNumber()) )
-			throw new GatewayException("SerialNumber must be unique, there is a gateway with the same ServialNumber");
-			
+		validate(gateway);
 		return gatewayRepository.save(gateway);
 	}
 	
@@ -42,5 +37,12 @@ public class GatewayServiceImpl implements GatewayService {
 		return gatewayRepository.getById(id);
 	}
 
+	
+	 private void validate(Gateway gateway) {
+		if (!IPv4ValidatorRegex.isValid(gateway.getIpAddress()))
+			throw new GatewayException("invalid IP4-address parameter");
+		if (gatewayRepository.checkUniquenessOfSerialNumber(gateway.getUniqueSerialNumber()))
+			throw new GatewayException("SerialNumber must be unique, there is a gateway with the same ServialNumber");
+	 }
 
 }
