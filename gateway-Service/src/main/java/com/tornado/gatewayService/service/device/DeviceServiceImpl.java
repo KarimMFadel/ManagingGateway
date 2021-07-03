@@ -3,7 +3,6 @@ package com.tornado.gatewayService.service.device;
 import java.util.List;
 import java.util.Objects;
 
-import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,14 +20,14 @@ public class DeviceServiceImpl implements DeviceService {
 	DeviceRepository deviceRepository;
 	
 	@Autowired
-	GatewayService GatewayService;
+	GatewayService gatewayService;
 
 	
 	@Transactional
 	@Override
 	public Device save(Device device, Long gatewayId) {
 		validateDevice(device, gatewayId);
-		device.setGateway(GatewayService.findById(gatewayId));
+		device.setGateway(gatewayService.findById(gatewayId));
 		return deviceRepository.save(device);
 	}
 
@@ -60,7 +59,7 @@ public class DeviceServiceImpl implements DeviceService {
 	
 	@Override
 	public List<Device> findByGatewayId(Long GatewayId) {
-		GatewayService.findById(GatewayId);
+		gatewayService.findById(GatewayId);
 		return deviceRepository.findByGatewayId(GatewayId);
 	}
 	

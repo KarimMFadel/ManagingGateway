@@ -80,23 +80,29 @@ class GatewayServiceApplicationTests {
 
 	@Test
 	void returnListOfdevices() {
+		when(gatewayRepository.existsById(GATEWAY_ID)).thenReturn(true);
+		when(gatewayService.findById(GATEWAY_ID)).thenReturn(defineGateways().get(0));
 		when(deviceRepository.findByGatewayId(GATEWAY_ID)).thenReturn(defineDevices());
+		
 		assertThat(deviceService.findByGatewayId(GATEWAY_ID)).size().isGreaterThan(0);
 	}
 
 	@Test
 	void addDevice() {
+		when(gatewayRepository.existsById(GATEWAY_ID)).thenReturn(true);
+		when(gatewayRepository.getById(GATEWAY_ID)).thenReturn(defineGateways().get(0));
+		
 		deviceService.save(defineDevices().get(0), GATEWAY_ID);
 		verify(gatewayRepository, times(1)).getById(GATEWAY_ID);
 	}
 
 	@Test
 	void removeDevice() {
+		when(deviceRepository.existsById(DEVICE_ID)).thenReturn(true);
 		when(deviceRepository.getById(DEVICE_ID)).thenReturn(defineDevices().get(0));
 
 		deviceService.remove(DEVICE_ID);
 
-		verify(deviceRepository, times(1)).getById(DEVICE_ID);
 		verify(deviceRepository, times(1)).deleteById(DEVICE_ID);
 	}
 
