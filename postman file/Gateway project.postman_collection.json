@@ -1,0 +1,146 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Gateway project",
+		"_postman_id": "0b8b8586-d2f2-2b68-beff-33152f7b312f",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Gateway API",
+			"description": "",
+			"item": [
+				{
+					"name": "get all Gateways with its' Devices",
+					"request": {
+						"url": "http://localhost:8080/gateway/rest/gateway/allWithDevices/",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "get all Gateways",
+					"request": {
+						"url": "http://localhost:8080/gateway/rest/gateway/",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "get Gateway with id",
+					"request": {
+						"url": "http://localhost:8080/gateway/rest/gateway/1",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "add Gateway",
+					"request": {
+						"url": "http://localhost:8080/gateway/rest/gateway/",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"uniqueSerialNumber\": \"G2FF12FF234\",\n    \"name\": \"Acer\",\n    \"ipAddress\": \"192.168.9.100\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Device API",
+			"description": "",
+			"item": [
+				{
+					"name": "get all Devices",
+					"request": {
+						"url": "http://localhost:8080/gateway/rest/device/",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "get devices by Device_ID",
+					"request": {
+						"url": "http://localhost:8080/gateway/rest/device/1",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "get devices by gatewayID",
+					"request": {
+						"url": "http://localhost:8080/gateway/rest/device/gateway/1",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "add device",
+					"request": {
+						"url": "http://localhost:8080/gateway/rest/device/",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"uniqueNumber\": \"3456345\",\n    \"vendor\": \"Ericsson\",\n    \"status\": \"OFFLINE\",\n    \"gatewayId\": 2\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "remove device",
+					"request": {
+						"url": "http://localhost:8080/gateway/rest/device/2",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
